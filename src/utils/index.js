@@ -403,21 +403,6 @@ function normalizePreferences(preferences) {
                         };
                     });
             }
-            const highlightConfig = { fields: {} };
-
-            Object.keys(resultComponent.fields)
-                .filter((field) => field !== 'userDefinedFields')
-                .forEach((field) => {
-                    highlightConfig.fields[field] = {};
-                });
-            Object.keys(resultComponent.fields.userDefinedFields || {}).forEach(
-                (field) => {
-                    highlightConfig.fields[field] = {};
-                },
-            );
-            resultComponent.rsConfig.highlightConfig = resultComponent.resultHighlight
-                ? highlightConfig
-                : undefined;
         }
         if (searchComponent) {
             const hasOldStructure =
@@ -432,16 +417,6 @@ function normalizePreferences(preferences) {
                         };
                     });
             }
-            const highlightConfig = { fields: {} };
-
-            Object.keys(resultComponent.fields).forEach((field) => {
-                highlightConfig.fields[field] = {};
-            });
-            searchComponent.rsConfig.highlightConfig = highlightConfig;
-            searchComponent.rsConfig.highlightConfig = searchComponent.rsConfig
-                .highlight
-                ? highlightConfig
-                : undefined;
         }
     });
     return clonePreferences;
@@ -468,7 +443,11 @@ function transformPreferences(preferences) {
         Object.keys(normalizedPreferences.pageSettings.pages).forEach(
             (page) => {
                 const pagePreferences =
-                    normalizedPreferences.pageSettings.pages[page];
+                    normalizePreferences.pageSettings.pages[page] || {};
+                const { componentSettings } = pagePreferences || {};
+                const { result: resultComponent, search: searchComponent } =
+                    componentSettings || {};
+
                 if (
                     pagePreferences.indexSettings &&
                     pagePreferences.indexSettings.endpoint
@@ -485,6 +464,43 @@ function transformPreferences(preferences) {
                         headers: parseJSON(endpoint.headers),
                         method: endpoint.method,
                     };
+                }
+                if (searchComponent) {
+                    let highlightConfig = { fields: {} };
+
+                    Object.keys(
+                        resultComponent.fields.userDefinedFields || {},
+                    ).forEach((field) => {
+                        if (
+                            resultComponent.fields.userDefinedFields[field] &&
+                            resultComponent.fields.userDefinedFields[field]
+                                .highlight
+                        ) {
+                            highlightConfig.fields[field] = {};
+                        }
+                    });
+                    searchComponent.rsConfig.highlight =
+                        componentSettings.result.resultHighlight;
+
+                    Object.keys(resultComponent.fields)
+                        .filter((field) => field !== 'userDefinedFields')
+                        .forEach((field) => {
+                            if (
+                                typeof resultComponent.fields[field] ===
+                                    'object' &&
+                                resultComponent.fields[field] &&
+                                resultComponent.fields[field].highlight
+                            ) {
+                                highlightConfig.fields[field] = {};
+                            }
+                        });
+                    highlightConfig = Object.keys(highlightConfig.fields).length
+                        ? highlightConfig
+                        : undefined;
+                    searchComponent.rsConfig.highlightConfig = highlightConfig;
+                    searchComponent.rsConfig.highlightConfig = resultComponent.resultHighlight
+                        ? highlightConfig
+                        : undefined;
                 }
             },
         );
