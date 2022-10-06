@@ -443,7 +443,7 @@ function transformPreferences(preferences) {
         Object.keys(normalizedPreferences.pageSettings.pages).forEach(
             (page) => {
                 const pagePreferences =
-                    normalizePreferences.pageSettings.pages[page] || {};
+                    normalizedPreferences.pageSettings.pages[page] || {};
                 const { componentSettings } = pagePreferences || {};
                 const { result: resultComponent, search: searchComponent } =
                     componentSettings || {};
