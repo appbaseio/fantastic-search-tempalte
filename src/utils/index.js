@@ -383,42 +383,113 @@ function parseJSON(str) {
     return parsedObj;
 }
 
+function normalizePreferences(preferences) {
+    const clonePreferences = { ...preferences };
+    Object.keys(clonePreferences.pageSettings.pages).forEach((page) => {
+        const pagePreferences = clonePreferences.pageSettings.pages[page] || {};
+        const { componentSettings } = pagePreferences || {};
+        const { result: resultComponent, search: searchComponent } =
+            componentSettings || {};
+        if (resultComponent) {
+            const hasOldStructure =
+                typeof resultComponent.fields.title === 'string';
+            if (hasOldStructure) {
+                Object.keys(resultComponent.fields)
+                    .filter((field) => field !== 'userDefinedFields')
+                    .forEach((field) => {
+                        resultComponent.fields[field] = {
+                            dataField: resultComponent.fields[field],
+                            highlight: false,
+                        };
+                    });
+            }
+            const highlightConfig = { fields: {} };
+
+            Object.keys(resultComponent.fields)
+                .filter((field) => field !== 'userDefinedFields')
+                .forEach((field) => {
+                    highlightConfig.fields[field] = {};
+                });
+            Object.keys(resultComponent.fields.userDefinedFields || {}).forEach(
+                (field) => {
+                    highlightConfig.fields[field] = {};
+                },
+            );
+            resultComponent.rsConfig.highlightConfig = resultComponent.resultHighlight
+                ? highlightConfig
+                : undefined;
+        }
+        if (searchComponent) {
+            const hasOldStructure =
+                typeof searchComponent.fields.title === 'string';
+            if (hasOldStructure) {
+                Object.keys(searchComponent.fields)
+                    .filter((field) => field !== 'userDefinedFields')
+                    .forEach((field) => {
+                        searchComponent.fields[field] = {
+                            dataField: searchComponent.fields[field],
+                            highlight: false,
+                        };
+                    });
+            }
+            const highlightConfig = { fields: {} };
+
+            Object.keys(resultComponent.fields).forEach((field) => {
+                highlightConfig.fields[field] = {};
+            });
+            searchComponent.rsConfig.highlightConfig = highlightConfig;
+            searchComponent.rsConfig.highlightConfig = searchComponent.rsConfig
+                .highlight
+                ? highlightConfig
+                : undefined;
+        }
+    });
+    return clonePreferences;
+}
+
 function transformPreferences(preferences) {
-    if (preferences.globalSettings && preferences.globalSettings.endpoint) {
-        const { endpoint } = preferences.globalSettings;
-        const { appbaseSettings } = preferences;
+    const normalizedPreferences = normalizePreferences(preferences);
+    if (
+        normalizedPreferences.globalSettings &&
+        normalizedPreferences.globalSettings.endpoint
+    ) {
+        const { endpoint } = normalizedPreferences.globalSettings;
+        const { appbaseSettings } = normalizedPreferences;
         // We may get a url relative to cluster
         const isRelative = endpoint.url[0] === '/';
 
-        preferences.globalSettings.endpoint = {
+        normalizedPreferences.globalSettings.endpoint = {
             url: isRelative ? appbaseSettings.url + endpoint.url : endpoint.url,
             headers: parseJSON(endpoint.headers),
             method: endpoint.method,
         };
     }
-    if (preferences.pageSettings) {
-        Object.keys(preferences.pageSettings.pages).forEach((page) => {
-            const pagePreferences = preferences.pageSettings.pages[page];
-            if (
-                pagePreferences.indexSettings &&
-                pagePreferences.indexSettings.endpoint
-            ) {
-                const { endpoint } = pagePreferences.indexSettings;
-                const { appbaseSettings } = preferences;
-                // We may get a url relative to cluster
-                const isRelative = endpoint.url[0] === '/';
+    if (normalizedPreferences.pageSettings) {
+        Object.keys(normalizedPreferences.pageSettings.pages).forEach(
+            (page) => {
+                const pagePreferences =
+                    normalizedPreferences.pageSettings.pages[page];
+                if (
+                    pagePreferences.indexSettings &&
+                    pagePreferences.indexSettings.endpoint
+                ) {
+                    const { endpoint } = pagePreferences.indexSettings;
+                    const { appbaseSettings } = normalizedPreferences;
+                    // We may get a url relative to cluster
+                    const isRelative = endpoint.url[0] === '/';
 
-                pagePreferences.indexSettings.endpoint = {
-                    url: isRelative
-                        ? appbaseSettings.url + endpoint.url
-                        : endpoint.url,
-                    headers: parseJSON(endpoint.headers),
-                    method: endpoint.method,
-                };
-            }
-        });
+                    pagePreferences.indexSettings.endpoint = {
+                        url: isRelative
+                            ? appbaseSettings.url + endpoint.url
+                            : endpoint.url,
+                        headers: parseJSON(endpoint.headers),
+                        method: endpoint.method,
+                    };
+                }
+            },
+        );
     }
 
-    return preferences;
+    return normalizedPreferences;
 }
 /* eslint-enable */
