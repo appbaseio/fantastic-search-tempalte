@@ -256,28 +256,34 @@ function ResultsLayout({
                     {data.map((item) => {
                         const handle = isPreview
                             ? ''
-                            : get(item, get(resultSettings, 'fields.handle'));
+                            : get(
+                                  item,
+                                  get(
+                                      resultSettings,
+                                      'fields.handle.dataField',
+                                  ),
+                              );
 
                         const image = get(
                             item,
-                            get(resultSettings, 'fields.image'),
+                            get(resultSettings, 'fields.image.dataField'),
                         );
                         const title = get(
                             item,
-                            get(resultSettings, 'fields.title'),
+                            get(resultSettings, 'fields.title.dataField'),
                         );
 
                         const description = get(
                             item,
-                            get(resultSettings, 'fields.description'),
+                            get(resultSettings, 'fields.description.dataField'),
                         );
                         const price = get(
                             item,
-                            get(resultSettings, 'fields.price'),
+                            get(resultSettings, 'fields.price.dataField'),
                         );
                         const priceUnit = get(
                             resultSettings,
-                            'fields.priceUnit',
+                            'fields.priceUnit.dataField',
                         );
                         const { variants } = item;
 

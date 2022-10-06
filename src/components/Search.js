@@ -372,20 +372,20 @@ class Search extends Component {
         );
         let valueFieldsObj = { valueFields: ['term_s'] };
         const defaultFields = get(this.resultSettings, 'fields', {});
-        if (defaultFields.title)
+        if (defaultFields.title.dataField)
             valueFieldsObj = {
                 ...valueFieldsObj,
                 valueFields: [
                     ...(valueFieldsObj.valueFields || []),
-                    defaultFields.title,
+                    defaultFields.title.dataField,
                 ],
             };
-        else if (defaultFields.description)
+        else if (defaultFields.description.dataField)
             valueFieldsObj = {
                 ...valueFieldsObj,
                 valueFields: [
                     ...(valueFieldsObj.valueFields || []),
-                    defaultFields.description,
+                    defaultFields.description.dataField,
                 ],
             };
 
