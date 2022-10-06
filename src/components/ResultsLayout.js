@@ -236,6 +236,11 @@ function ResultsLayout({
         'View Product',
     );
     const redirectUrlIcon = get(searchSettings, 'redirectUrlIcon', '');
+    const userDefinedFields = get(
+        resultSettings,
+        'fields.userDefinedFields',
+        {},
+    );
 
     function getFontFamily() {
         const receivedFont = get(theme, 'typography.fontFamily', '');
@@ -649,6 +654,33 @@ function ResultsLayout({
                                             </div>
                                         }
                                     />
+                                    {Object.keys(userDefinedFields).map(
+                                        (field) => {
+                                            const source = item._source;
+                                            const dataField = userDefinedFields[
+                                                field
+                                            ].dataField
+                                                ? userDefinedFields[field]
+                                                      .dataField
+                                                : field;
+                                            return (
+                                                <div
+                                                    style={{
+                                                        margin: '5px 0px',
+                                                    }}
+                                                >
+                                                    {field}{' '}
+                                                    {
+                                                        source[
+                                                            dataField.split(
+                                                                '.keyword',
+                                                            )[0]
+                                                        ]
+                                                    }
+                                                </div>
+                                            );
+                                        },
+                                    )}
                                     {redirectToProduct ? (
                                         <Button
                                             type="primary"
