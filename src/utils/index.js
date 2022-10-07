@@ -276,8 +276,10 @@ export const getSearchPreferences = () => {
             const prefs = JSON.parse(
                 window.APPBASE_SEARCH_PREFERENCES || appbasePrefs,
             );
-
-            if (typeof prefs === 'string') return defaultTemplatePreferences;
+            if (typeof prefs === 'string') {
+                // eslint-disable-next-line no-use-before-define
+                return transformPreferences(defaultTemplatePreferences);
+            }
 
             // eslint-disable-next-line no-use-before-define
             return transformPreferences(prefs);
@@ -501,7 +503,6 @@ function transformPreferences(preferences) {
                     highlightConfig = Object.keys(highlightConfig.fields).length
                         ? highlightConfig
                         : undefined;
-                    searchComponent.rsConfig.highlightConfig = highlightConfig;
                     searchComponent.rsConfig.highlightConfig = resultComponent.resultHighlight
                         ? highlightConfig
                         : undefined;
