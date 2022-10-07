@@ -364,30 +364,21 @@ class Search extends Component {
 
     renderCategorySearch = (categorySearchProps) => {
         const { toggleFilters, value } = this.state;
+        const backend = get(this.preferences, 'backend', '');
+        const isFusion = backend === 'fusion';
         const searchIcon = get(this.searchSettings, 'searchButton.icon', '');
         const searchText = get(
             this.searchSettings,
             'searchButton.text',
             'Search for products...',
         );
-        let valueFieldsObj = { valueFields: ['term_s'] };
+        let valueFields = ['term_s'];
         const defaultFields = get(this.resultSettings, 'fields', {});
-        if (defaultFields.title.dataField)
-            valueFieldsObj = {
-                ...valueFieldsObj,
-                valueFields: [
-                    ...(valueFieldsObj.valueFields || []),
-                    defaultFields.title.dataField,
-                ],
-            };
-        else if (defaultFields.description.dataField)
-            valueFieldsObj = {
-                ...valueFieldsObj,
-                valueFields: [
-                    ...(valueFieldsObj.valueFields || []),
-                    defaultFields.description.dataField,
-                ],
-            };
+        if (defaultFields.title.dataField) {
+            valueFields = [...valueFields, defaultFields.title.dataField];
+        } else if (defaultFields.description.dataField) {
+            valueFields = [...valueFields, defaultFields.description.dataField];
+        }
 
         return (
             <ReactiveComponent
@@ -436,7 +427,7 @@ class Search extends Component {
                     sectionLabel:
                         '<h3 class="section-label">Index Suggestions</h3>',
                     size: 3,
-                    ...valueFieldsObj,
+                    valueFields: isFusion ? valueFields : undefined,
                 }}
                 size={6}
                 onChange={(val) => {
