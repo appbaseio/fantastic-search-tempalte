@@ -236,6 +236,11 @@ function ResultsLayout({
         'View Product',
     );
     const redirectUrlIcon = get(searchSettings, 'redirectUrlIcon', '');
+    const userDefinedFields = get(
+        resultSettings,
+        'fields.userDefinedFields',
+        {},
+    );
 
     function getFontFamily() {
         const receivedFont = get(theme, 'typography.fontFamily', '');
@@ -256,28 +261,34 @@ function ResultsLayout({
                     {data.map((item) => {
                         const handle = isPreview
                             ? ''
-                            : get(item, get(resultSettings, 'fields.handle'));
+                            : get(
+                                  item,
+                                  get(
+                                      resultSettings,
+                                      'fields.handle.dataField',
+                                  ),
+                              );
 
                         const image = get(
                             item,
-                            get(resultSettings, 'fields.image'),
+                            get(resultSettings, 'fields.image.dataField'),
                         );
                         const title = get(
                             item,
-                            get(resultSettings, 'fields.title'),
+                            get(resultSettings, 'fields.title.dataField'),
                         );
 
                         const description = get(
                             item,
-                            get(resultSettings, 'fields.description'),
+                            get(resultSettings, 'fields.description.dataField'),
                         );
                         const price = get(
                             item,
-                            get(resultSettings, 'fields.price'),
+                            get(resultSettings, 'fields.price.dataField'),
                         );
                         const priceUnit = get(
                             resultSettings,
-                            'fields.priceUnit',
+                            'fields.priceUnit.dataField',
                         );
                         const { variants } = item;
 
@@ -643,6 +654,33 @@ function ResultsLayout({
                                             </div>
                                         }
                                     />
+                                    {Object.keys(userDefinedFields).map(
+                                        (field) => {
+                                            const source = item._source;
+                                            const dataField = userDefinedFields[
+                                                field
+                                            ].dataField
+                                                ? userDefinedFields[field]
+                                                      .dataField
+                                                : field;
+                                            return (
+                                                <div
+                                                    style={{
+                                                        margin: '5px 0px',
+                                                    }}
+                                                >
+                                                    {field}{' '}
+                                                    {
+                                                        source[
+                                                            dataField.split(
+                                                                '.keyword',
+                                                            )[0]
+                                                        ]
+                                                    }
+                                                </div>
+                                            );
+                                        },
+                                    )}
                                     {redirectToProduct ? (
                                         <Button
                                             type="primary"
