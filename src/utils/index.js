@@ -397,10 +397,12 @@ function normalizePreferences(preferences) {
                 Object.keys(resultComponent.fields)
                     .filter((field) => field !== 'userDefinedFields')
                     .forEach((field) => {
-                        resultComponent.fields[field] = {
-                            dataField: resultComponent.fields[field],
-                            highlight: false,
-                        };
+                        if (resultComponent.fields[field]) {
+                            resultComponent.fields[field] = {
+                                dataField: resultComponent.fields[field],
+                                highlight: false,
+                            };
+                        }
                     });
             }
         }
@@ -411,10 +413,12 @@ function normalizePreferences(preferences) {
                 Object.keys(searchComponent.fields)
                     .filter((field) => field !== 'userDefinedFields')
                     .forEach((field) => {
-                        searchComponent.fields[field] = {
-                            dataField: searchComponent.fields[field],
-                            highlight: false,
-                        };
+                        if (searchComponent.fields[field]) {
+                            searchComponent.fields[field] = {
+                                dataField: searchComponent.fields[field],
+                                highlight: false,
+                            };
+                        }
                     });
             }
         }
