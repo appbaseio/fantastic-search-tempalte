@@ -364,8 +364,6 @@ class Search extends Component {
 
     renderCategorySearch = (categorySearchProps) => {
         const { toggleFilters, value } = this.state;
-        const backend = get(this.preferences, 'backend', '');
-        const isFusion = backend === 'fusion';
         const searchIcon = get(this.searchSettings, 'searchButton.icon', '');
         const searchText = get(
             this.searchSettings,
@@ -427,7 +425,7 @@ class Search extends Component {
                     sectionLabel:
                         '<h3 class="section-label">Index Suggestions</h3>',
                     size: 3,
-                    valueFields: isFusion ? valueFields : undefined,
+                    valueFields,
                 }}
                 size={6}
                 onChange={(val) => {
