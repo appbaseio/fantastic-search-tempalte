@@ -8,7 +8,6 @@ const SearchPage = () => {
     const index = get(preferences, 'appbaseSettings.index', '');
     const credentials = get(preferences, 'appbaseSettings.credentials', '');
     const url = get(preferences, 'appbaseSettings.url', '');
-
     return (
         <div style={{ padding: 30 }}>
             <ReactiveBase
@@ -16,6 +15,7 @@ const SearchPage = () => {
                 url={url}
                 credentials={credentials}
                 preferences={preferences}
+                theme={preferences.themeSettings.rsConfig}
             >
                 <DataSearch
                     componentId="search"
