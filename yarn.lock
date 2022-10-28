@@ -77,10 +77,10 @@
     lodash "^4.17.21"
     resize-observer-polyfill "^1.5.1"
 
-"@appbaseio/enterprise-search-ui@1.0.47-alpha.2":
-  version "1.0.47-alpha.2"
-  resolved "https://registry.yarnpkg.com/@appbaseio/enterprise-search-ui/-/enterprise-search-ui-1.0.47-alpha.2.tgz#0eacef33f82acfbd7bf75ab24b138a9d1a843217"
-  integrity sha512-aOFS0nAzUfJIV53sAUBvcg7MZqvbIjPjLqihajal1nLOyZhfmXLHBPFyqgAawxv0W4ExLM+EU8rJNVOqk4IR1Q==
+"@appbaseio/enterprise-search-ui@^1.0.49":
+  version "1.0.49"
+  resolved "https://registry.yarnpkg.com/@appbaseio/enterprise-search-ui/-/enterprise-search-ui-1.0.49.tgz#5b6bb5934ffe125bf9223f757888a47c77edd31f"
+  integrity sha512-21yo0iR/+I5GVCToTtW++Gxn2pgYJrWNqKtlIx7CNT0wfvPqOfU7TOoP7b7jCgVb6t2kLW0mOpUlf8B14DFHYQ==
   dependencies:
     "@ant-design/icons" "^4.7.0"
     "@emotion/css" "^11.9.0"
