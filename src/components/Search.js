@@ -371,6 +371,7 @@ class Search extends Component {
             'Search for products...',
         );
         let valueFields = ['term_s'];
+        const showSearchAs = get(this.searchSettings, 'showSearchAs', 'sticky');
         const defaultFields = get(this.resultSettings, 'fields', {});
         if (defaultFields.title.dataField) {
             valueFields = [...valueFields, defaultFields.title.dataField];
@@ -403,7 +404,7 @@ class Search extends Component {
                 URLParams
                 style={{
                     marginBottom: 20,
-                    position: 'sticky',
+                    position: showSearchAs,
                     top: '10px',
                     zIndex: 1000,
                     display: toggleFilters ? 'none' : 'block',
