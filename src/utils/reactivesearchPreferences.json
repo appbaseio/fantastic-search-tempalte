@@ -202,7 +202,7 @@
                 "titleColor": "#424242"
             },
             "typography": {
-                "fontFamily": "default"
+                "fontFamily": "sans-serif"
             }
         },
         "meta": {
