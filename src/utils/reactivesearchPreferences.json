@@ -1,8 +1,9 @@
 {
-    "name": "Search good-books-ds",
+    "name": "Reactivesearch",
     "description": "",
     "pipeline": "good-books-ds",
-    "id": "",
+    "backend": "elasticsearch",
+    "id": "372c90f4-cee2-432d-8fc9-4cca03e2fb18",
     "pageSettings": {
         "currentPage": "home",
         "pages": {
@@ -17,15 +18,34 @@
                             "icon": "",
                             "text": "Click here to search"
                         },
-                        "redirectUrlText": "View Product",
+                        "redirectUrlText": "Open URL",
                         "redirectUrlIcon": "",
+                        "showSearchAs": "sticky",
                         "fields": {
-                            "title": "original_title",
-                            "description": "authors",
-                            "price": "monthly_price",
-                            "priceUnit": null,
-                            "image": "image",
-                            "handle": ""
+                            "title": {
+                                "dataField": "original_title",
+                                "highlight": true
+                            },
+                            "description": {
+                                "dataField": "authors",
+                                "highlight": true
+                            },
+                            "price": {
+                                "dataField": "books_count",
+                                "highlight": false
+                            },
+                            "priceUnit": "Book:",
+                            "image": {
+                                "dataField": "image",
+                                "highlight": false
+                            },
+                            "handle": {
+                                "dataField": "",
+                                "highlight": false
+                            },
+                            "handleViewer": "button",
+                            "userDefinedFields": {},
+                            "cssSelector": ""
                         },
                         "rsConfig": {
                             "autosuggest": true,
@@ -39,12 +59,30 @@
                     "result": {
                         "componentType": "REACTIVELIST",
                         "fields": {
-                            "title": "original_title",
-                            "description": "authors",
-                            "price": "monthly_price",
-                            "priceUnit": null,
-                            "image": "image",
-                            "handle": ""
+                            "title": {
+                                "dataField": "original_title",
+                                "highlight": true
+                            },
+                            "description": {
+                                "dataField": "authors",
+                                "highlight": true
+                            },
+                            "price": {
+                                "dataField": "books_count",
+                                "highlight": false
+                            },
+                            "priceUnit": "Book:",
+                            "image": {
+                                "dataField": "image",
+                                "highlight": false
+                            },
+                            "handle": {
+                                "dataField": "",
+                                "highlight": false
+                            },
+                            "handleViewer": "button",
+                            "userDefinedFields": {},
+                            "cssSelector": ""
                         },
                         "customMessages": {
                             "resultStats": "[count] products found in [time] ms",
@@ -56,31 +94,10 @@
                             "componentType": "REACTIVELIST"
                         },
                         "sortOptionSelector": [],
-                        "resultHighlight": false,
+                        "resultHighlight": true,
                         "layout": "grid",
-                        "viewSwitcher": true
-                    },
-                    "Books_Count_1": {
-                        "enabled": true,
-                        "customMessages": {
-                            "loading": "Fetching Options",
-                            "noResults": "No items Found"
-                        },
-                        "rsConfig": {
-                            "title": "Books Count",
-                            "dataField": "books_count",
-                            "filterLabel": "Books Count",
-                            "filterType": "range",
-                            "startValue": "10",
-                            "endValue": "97",
-                            "startLabel": "Start",
-                            "endLabel": "End",
-                            "showHistogram": true,
-                            "componentType": "RANGEINPUT",
-                            "componentId": "Books_Count_1"
-                        },
-                        "componentType": "RANGEINPUT",
-                        "facetType": "dynamic"
+                        "viewSwitcher": true,
+                        "displayFields": {}
                     },
                     "Authors_0": {
                         "enabled": true,
@@ -100,21 +117,78 @@
                             "showCheckbox": true,
                             "showSearch": true,
                             "showMissing": false,
+                            "missingLabel": null,
+                            "selectAllLabel": null,
                             "componentId": "Authors_0"
                         },
                         "componentType": "MULTILIST",
                         "facetType": "dynamic"
+                    },
+                    "Books_Count_1": {
+                        "enabled": true,
+                        "customMessages": {
+                            "loading": "Fetching Options",
+                            "noResults": "No items Found"
+                        },
+                        "rsConfig": {
+                            "title": "Books Count",
+                            "dataField": "books_count",
+                            "filterLabel": "Books Count",
+                            "filterType": "range",
+                            "startValue": "10",
+                            "endValue": "97",
+                            "startLabel": "Start",
+                            "endLabel": "End",
+                            "showHistogram": true,
+                            "calendarInterval": null,
+                            "componentType": "RANGEINPUT",
+                            "componentId": "Books_Count_1"
+                        },
+                        "componentType": "RANGEINPUT",
+                        "facetType": "dynamic"
+                    }
+                },
+                "indexSettings": {
+                    "index": "good-books-ds",
+                    "fusionSettings": {
+                        "app": null,
+                        "profile": null,
+                        "searchProfile": null,
+                        "meta": null
+                    },
+                    "endpoint": {
+                        "url": "/good-books-ds/_reactivesearch",
+                        "method": "POST",
+                        "headers": "{\"Authorization\":\"Basic OTkxZWQ2ZjQ0OTdjOmZjZmU3M2UzLTM5YjgtNGQ0MC04MWIxLWI1ZDU1M2U3MzI5Yw==\"}"
                     }
                 }
             }
         },
         "fields": {
-            "description": "",
-            "handle": "",
-            "image": "",
-            "price": "",
-            "priceUnit": null,
-            "title": "original_title"
+            "cssSelector": "",
+            "description": {
+                "dataField": "authors",
+                "highlight": false
+            },
+            "handle": {
+                "dataField": "",
+                "highlight": false
+            },
+            "handleViewer": "link",
+            "image": {
+                "dataField": "image",
+                "highlight": false
+            },
+            "price": {
+                "dataField": "books_count",
+                "highlight": false
+            },
+            "priceUnit": "Book:",
+            "title": {
+                "dataField": "original_title",
+                "highlight": false
+            },
+            "userDefinedFields": {}
         }
     },
     "themeSettings": {
@@ -128,13 +202,13 @@
                 "titleColor": "#424242"
             },
             "typography": {
-                "fontFamily": "default"
+                "fontFamily": "sans-serif"
             }
         },
         "meta": {
             "bodyBackgroundColor": "#fff",
-            "navbarBackgroundColor": "#0B6AFF",
-            "linkColor": "#0B6AFF",
+            "navbarBackgroundColor": "#001628",
+            "linkColor": "#3eb0ef",
             "fontWeight": 400
         }
     },
@@ -144,24 +218,44 @@
         "meta": {
             "branding": {
                 "logoUrl": "",
-                "logoWidth": 20,
+                "logoWidth": 200,
                 "logoAlignment": "left"
             },
             "deploySettings": {
-                "versionId": "jTJgQS3AV1tZu_e.2_bzgvaJzyQ_5UFQ"
+                "versionId": ""
             }
+        },
+        "endpoint": {
+            "url": "/_fusion/_reactivesearch",
+            "method": "",
+            "headers": ""
         }
     },
     "exportSettings": {
         "exportAs": "embed",
-        "credentials": "a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61",
+        "credentials": "991ed6f4497c:fcfe73e3-39b8-4d40-81b1-b5d553e7329c",
         "openAsPage": false,
         "type": "other"
     },
+    "chartSettings": {
+        "charts": []
+    },
     "syncSettings": null,
+    "authenticationSettings": {
+        "enableAuth0": false,
+        "enableProfilePage": true,
+        "profileSettingsForm": {
+            "viewData": true,
+            "editData": true,
+            "closeAccount": true,
+            "editThemeSettings": true,
+            "editSearchPreferences": true
+        },
+        "clientId": "fQ50eZkW3WlFoDEfHAPBxiOTYmzSXZC7"
+    },
     "appbaseSettings": {
         "index": "good-books-ds",
-        "credentials": "a03a1cb71321:75b6603d-9456-4a5a-af6b-a487b309eb61",
+        "credentials": "991ed6f4497c:fcfe73e3-39b8-4d40-81b1-b5d553e7329c",
         "url": "https://appbase-demo-ansible-abxiydt-arc.searchbase.io"
     }
 }
