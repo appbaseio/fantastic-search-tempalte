@@ -180,6 +180,7 @@ const Filters = ({
                                 style={{
                                     color: get(theme, 'colors.textColor'),
                                 }}
+                                data-cy={`${filter}-facet`}
                             >
                                 {facet.enabled ? (
                                     <React.Fragment>
