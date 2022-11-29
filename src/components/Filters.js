@@ -324,6 +324,10 @@ const Filters = ({
                                                             ),
                                                         }}
                                                         title=""
+                                                        innerClass={{
+                                                            'input-container':
+                                                                'range-input-render-input',
+                                                        }}
                                                         {...dateProps}
                                                     />
                                                 ) : (
