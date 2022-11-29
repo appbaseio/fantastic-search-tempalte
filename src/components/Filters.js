@@ -211,6 +211,7 @@ const Filters = ({
                                                 componentId={filter}
                                                 innerClass={{
                                                     input: 'list-input',
+                                                    list: 'multi-list-li',
                                                 }}
                                                 URLParams
                                                 loader={
