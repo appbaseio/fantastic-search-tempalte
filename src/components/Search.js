@@ -655,7 +655,10 @@ class Search extends Component {
                             pageSettings={this.pageSettings}
                         />
 
-                        <div data-cy="render-results">
+                        <div
+                            data-cy="render-results"
+                            className="render-results"
+                        >
                             {this.themeType === 'minimal' &&
                                 this.renderCategorySearch({
                                     css: minimalSearchStyles(
