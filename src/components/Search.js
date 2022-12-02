@@ -465,7 +465,7 @@ class Search extends Component {
         }
         const logoSettings = get(this.globalSettings, 'meta.branding', {});
         const backend = get(this.preferences, 'backend', '');
-        const isFusion = backend === 'fusion';
+        const isElasticSearch = backend === 'elasticSearch';
         const globalEndpoint = get(this.globalSettings, 'endpoint');
         const pageEndpoint = get(
             this.pageSettings,
@@ -485,6 +485,19 @@ class Search extends Component {
             ...pageFusionSettings,
         };
 
+        const globalmongoDBSettings = get(
+            this.preferences,
+            'mongoDBSettings',
+            {},
+        );
+        const pagemongoDBSettings = get(
+            this.pageSettings,
+            `pages.${this.pageSettings.currentPage}.indexSettings.mongoDBSettings`,
+        );
+        const mongoDBSettings = {
+            ...(globalmongoDBSettings || {}),
+            ...(pagemongoDBSettings || {}),
+        };
         const endpoint = pageEndpoint || globalEndpoint;
         const mapsAPIkey = get(
             this.resultSettings,
@@ -501,11 +514,11 @@ class Search extends Component {
             (component) =>
                 component.componentType === componentTypes.tabDataList,
         ) ?? [])[0];
-        const transformRequest = isFusion
+        const transformRequest = !isElasticSearch
             ? (props) => {
-                  if (Object.keys(fusionSettings).length) {
-                      const newBody = JSON.parse(props.body);
-                      newBody.metadata = {
+                  const newBody = JSON.parse(props.body);
+                  newBody.metadata = {
+                      ...(backend === 'fusion' && {
                           app: fusionSettings.app,
                           profile: fusionSettings.profile,
                           suggestion_profile: fusionSettings.searchProfile,
@@ -514,10 +527,16 @@ class Search extends Component {
                               'meta.sponsoredProfile',
                               '',
                           ),
-                      };
-                      // eslint-disable-next-line
-                      props.body = JSON.stringify(newBody);
-                  }
+                      }),
+                      ...(backend === 'mongodb' && {
+                          db: mongoDBSettings.db,
+                          collection: mongoDBSettings.collection,
+                      }),
+                  };
+
+                  // eslint-disable-next-line
+                  props.body = JSON.stringify(newBody);
+
                   return props;
               }
             : undefined;
