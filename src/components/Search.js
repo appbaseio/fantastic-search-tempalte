@@ -487,7 +487,7 @@ class Search extends Component {
 
         const globalmongoDBSettings = get(
             this.preferences,
-            'mongoDBSettings',
+            'globalSettings.meta.mongoDBSettings',
             {},
         );
         const pagemongoDBSettings = get(
