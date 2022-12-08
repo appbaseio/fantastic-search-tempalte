@@ -465,7 +465,6 @@ class Search extends Component {
         }
         const logoSettings = get(this.globalSettings, 'meta.branding', {});
         const backend = get(this.preferences, 'backend', '');
-        const isElasticSearch = backend === 'elasticSearch';
         const globalEndpoint = get(this.globalSettings, 'endpoint');
         const pageEndpoint = get(
             this.pageSettings,
@@ -514,7 +513,9 @@ class Search extends Component {
             (component) =>
                 component.componentType === componentTypes.tabDataList,
         ) ?? [])[0];
-        const transformRequest = !isElasticSearch
+        const isTransformRequest =
+            backend === 'fusion' || backend === 'mongodb';
+        const transformRequest = isTransformRequest
             ? (props) => {
                   const newBody = JSON.parse(props.body);
                   newBody.metadata = {
