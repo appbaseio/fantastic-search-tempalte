@@ -92,7 +92,6 @@ const Filters = ({
 
     return (
         <div
-            // eslint-disable-next-line react/no-unknown-property
             css={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fit, minmax (250px, 1fr))',
