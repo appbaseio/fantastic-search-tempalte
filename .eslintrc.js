@@ -20,6 +20,7 @@ module.exports = {
         camelcase: 0,
         'no-underscore-dangle': 0,
         'prettier/prettier': 'error',
+        'class-methods-use-this': 0,
         'react/function-component-definition': 0,
         'react/no-unknown-property': ['error', { ignore: ['css'] }],
         'react/jsx-indent': 0,
