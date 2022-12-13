@@ -180,6 +180,7 @@ const Filters = ({
                                 style={{
                                     color: get(theme, 'colors.textColor'),
                                 }}
+                                data-cy={`${filter}-facet`}
                             >
                                 {facet.enabled ? (
                                     <React.Fragment>
@@ -210,6 +211,7 @@ const Filters = ({
                                                 componentId={filter}
                                                 innerClass={{
                                                     input: 'list-input',
+                                                    list: 'multi-list-li',
                                                 }}
                                                 URLParams
                                                 loader={
@@ -323,6 +325,10 @@ const Filters = ({
                                                             ),
                                                         }}
                                                         title=""
+                                                        innerClass={{
+                                                            'input-container':
+                                                                'range-input-render-input',
+                                                        }}
                                                         {...dateProps}
                                                     />
                                                 ) : (

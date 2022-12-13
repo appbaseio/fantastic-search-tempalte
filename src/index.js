@@ -11,7 +11,7 @@ const renderById = (id) => {
 
     if (container) {
         ReactDOM.render(
-            <div>
+            <div style={{ overflowY: 'scroll' }} id="scrollable-body">
                 <Helmet>
                     <meta charset="utf-8" />
                     <meta

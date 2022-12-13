@@ -15,7 +15,6 @@ import { ResultsLayoutByCategory } from '@appbaseio/enterprise-search-ui';
 import { mediaMax } from '../utils/media';
 import Suggestion from './Suggestion';
 import Filters from './Filters';
-import FiltersN from './FIltersN';
 import {
     defaultPreferences,
     getSearchPreferences,
@@ -644,30 +643,17 @@ class Search extends Component {
                             gridGap: 20,
                         }}
                     >
-                        {Object.keys(this.pageSettings).length ? (
-                            <Filters
-                                theme={this.theme}
-                                isMobile={this.isMobile}
-                                currency={this.currency}
-                                themeType={this.themeType}
-                                exportType={this.exportType}
-                                preferences={this.preferences}
-                                toggleFilters={toggleFilters}
-                                getFontFamily={this.getFontFamily()}
-                                pageSettings={this.pageSettings}
-                            />
-                        ) : (
-                            <FiltersN
-                                theme={this.theme}
-                                isMobile={this.isMobile}
-                                currency={this.currency}
-                                themeType={this.themeType}
-                                exportType={this.exportType}
-                                preferences={this.preferences}
-                                toggleFilters={toggleFilters}
-                                getFontFamily={this.getFontFamily()}
-                            />
-                        )}
+                        <Filters
+                            theme={this.theme}
+                            isMobile={this.isMobile}
+                            currency={this.currency}
+                            themeType={this.themeType}
+                            exportType={this.exportType}
+                            preferences={this.preferences}
+                            toggleFilters={toggleFilters}
+                            getFontFamily={this.getFontFamily()}
+                            pageSettings={this.pageSettings}
+                        />
 
                         <div>
                             {this.themeType === 'minimal' &&
@@ -712,6 +698,10 @@ class Search extends Component {
                                         'resultHighlight',
                                         false,
                                     ),
+                                    innerClass: {
+                                        pagination: 'results-pagination',
+                                        sortOptions: 'results-sort-options',
+                                    },
                                 }}
                             />
                         </div>
