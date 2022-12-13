@@ -320,9 +320,8 @@ export const RecommendationTypes = {
 
 export const accapi = 'https://accapi.appbase.io';
 
-export const getFieldWithoutKeyword = (fieldWithKeyword = '') => {
-    return fieldWithKeyword.split('.keyword')[0];
-};
+export const getFieldWithoutKeyword = (fieldWithKeyword = '') =>
+    fieldWithKeyword.split('.keyword')[0];
 
 export const CtaActions = {
     REDIRECT_TO_PRODUCT: 'redirect_to_product',
@@ -527,9 +526,8 @@ function transformPreferences(preferences) {
                             resultComponent.fields.userDefinedFields[field]
                                 .dataField
                         ) {
-                            const {
-                                dataField,
-                            } = resultComponent.fields.userDefinedFields[field];
+                            const { dataField } =
+                                resultComponent.fields.userDefinedFields[field];
                             highlightConfig.fields[dataField] = {};
                         }
                     });
@@ -541,9 +539,8 @@ function transformPreferences(preferences) {
                                 resultComponent.fields[field].highlight &&
                                 resultComponent.fields[field].dataField
                             ) {
-                                const { dataField } = resultComponent.fields[
-                                    field
-                                ];
+                                const { dataField } =
+                                    resultComponent.fields[field];
                                 highlightConfig.fields[dataField] = {};
                             }
                         });
@@ -569,14 +566,14 @@ function transformPreferences(preferences) {
                 }
 
                 if (resultComponent) {
-                    resultComponent.rsConfig.highlightConfig = resultComponent.resultHighlight
-                        ? highlightConfig
-                        : undefined;
+                    resultComponent.rsConfig.highlightConfig =
+                        resultComponent.resultHighlight
+                            ? highlightConfig
+                            : undefined;
                 }
                 if (searchComponent) {
-                    searchComponent.rsConfig.highlightConfig = searchComponent.highlight
-                        ? highlightConfig
-                        : undefined;
+                    searchComponent.rsConfig.highlightConfig =
+                        searchComponent.highlight ? highlightConfig : undefined;
                 }
             },
         );

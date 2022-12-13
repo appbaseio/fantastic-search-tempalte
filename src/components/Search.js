@@ -211,6 +211,15 @@ const mobileButtonStyles = css`
     border: 0;
 `;
 
+const filterWrapper = css`
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    ${mediaMax.medium} {
+        grid-template-columns: 1fr;
+    }
+    grid-gap: 20px;
+`;
+
 const searchRef = React.createRef();
 
 let userIdObj = {};
@@ -337,11 +346,6 @@ class Search extends Component {
         }
     };
 
-    getMultiListProps = (listComponentProps) => {
-        const { title, ...restProps } = listComponentProps;
-        return restProps;
-    };
-
     handleToggleFilter = () => {
         this.setState(({ toggleFilters }) => ({
             toggleFilters: !toggleFilters,
@@ -357,9 +361,8 @@ class Search extends Component {
         return fontFamily ? { fontFamily } : {};
     };
 
-    isMobile = () => {
-        return window.innerWidth <= 768;
-    };
+    // eslint-disable-next-line class-methods-use-this
+    isMobile = () => window.innerWidth <= 768;
 
     renderCategorySearch = (categorySearchProps) => {
         const { toggleFilters, value } = this.state;
@@ -431,17 +434,15 @@ class Search extends Component {
                 onChange={(val) => {
                     this.setState({ value: val });
                 }}
-                renderItem={(suggestion) => {
-                    return (
-                        <Suggestion
-                            suggestion={suggestion}
-                            fields={get(this.searchSettings, 'fields', {})}
-                            themeConfig={this.theme}
-                            highlight={this.searchSettings.rsConfig.highlight}
-                            currentValue={value}
-                        />
-                    );
-                }}
+                renderItem={(suggestion) => (
+                    <Suggestion
+                        suggestion={suggestion}
+                        fields={get(this.searchSettings, 'fields', {})}
+                        themeConfig={this.theme}
+                        highlight={this.searchSettings.rsConfig.highlight}
+                        currentValue={value}
+                    />
+                )}
                 {...categorySearchProps}
                 showDistinctSuggestions
             />
@@ -653,16 +654,7 @@ class Search extends Component {
                         this.themeType === 'geo') &&
                         this.renderCategorySearch()}
 
-                    <div
-                        css={{
-                            display: 'grid',
-                            gridTemplateColumns: '300px 1fr',
-                            [mediaMax.medium]: {
-                                gridTemplateColumns: '1fr',
-                            },
-                            gridGap: 20,
-                        }}
-                    >
+                    <div css={filterWrapper}>
                         <Filters
                             theme={this.theme}
                             isMobile={this.isMobile}
