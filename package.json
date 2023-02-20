@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "dependencies": {
-        "@appbaseio/enterprise-search-ui": "^1.0.51",
+        "@appbaseio/enterprise-search-ui": "latest",
         "@appbaseio/reactivesearch": "^3.42.1",
         "@emotion/core": "^10.0.35",
         "@testing-library/jest-dom": "^5.16.5",
