@@ -7,6 +7,7 @@ import get from 'lodash.get';
 import Highlight from 'react-highlight-words';
 import createDOMPurify from 'dompurify';
 import { shopifyDefaultFields } from '../utils';
+import placeholderImg from '../images/placeholder.png'
 
 const DOMPurify = createDOMPurify(window);
 
@@ -70,7 +71,7 @@ const Suggestion = ({
                 <img
                     src={
                         image ||
-                        'https://www.houseoftara.com/shop/wp-content/uploads/2019/05/placeholder.jpg'
+                        placeholderImg
                     }
                     alt="suggestion"
                     width="40px"
