@@ -306,9 +306,8 @@ class Search extends Component {
                     defaultPreferences.resultSettings.rsConfig.infiniteScroll,
                 )
             ) {
-                const containerCollection = document.getElementsByClassName(
-                    'ant-modal',
-                );
+                const containerCollection =
+                    document.getElementsByClassName('ant-modal');
 
                 if (containerCollection && containerCollection.length > 0) {
                     // eslint-disable-next-line
