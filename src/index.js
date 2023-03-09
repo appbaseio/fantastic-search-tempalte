@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Helmet } from 'react-helmet';
 import App from './App';
 import 'antd/dist/antd.css';
@@ -8,9 +8,9 @@ import './index.css';
 const renderById = (id) => {
     const isIdAvailble = (elemId) => document.getElementById(elemId);
     const container = isIdAvailble(id);
-
     if (container) {
-        ReactDOM.render(
+        const root = createRoot(container);
+        root.render(
             <div style={{ overflowY: 'scroll' }} id="scrollable-body">
                 <Helmet>
                     <meta charset="utf-8" />
@@ -50,7 +50,6 @@ const renderById = (id) => {
                 </Helmet>
                 <App id={id} />
             </div>,
-            document.getElementById(id),
         );
     }
 };
