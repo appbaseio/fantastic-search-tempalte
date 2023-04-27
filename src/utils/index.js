@@ -526,8 +526,9 @@ function transformPreferences(preferences) {
                             resultComponent.fields.userDefinedFields[field]
                                 .dataField
                         ) {
-                            const { dataField } =
-                                resultComponent.fields.userDefinedFields[field];
+                            const {
+                                dataField,
+                            } = resultComponent.fields.userDefinedFields[field];
                             highlightConfig.fields[dataField] = {};
                         }
                     });
@@ -539,8 +540,9 @@ function transformPreferences(preferences) {
                                 resultComponent.fields[field].highlight &&
                                 resultComponent.fields[field].dataField
                             ) {
-                                const { dataField } =
-                                    resultComponent.fields[field];
+                                const { dataField } = resultComponent.fields[
+                                    field
+                                ];
                                 highlightConfig.fields[dataField] = {};
                             }
                         });
@@ -566,14 +568,18 @@ function transformPreferences(preferences) {
                 }
 
                 if (resultComponent) {
-                    resultComponent.rsConfig.highlightConfig =
-                        resultComponent.resultHighlight
-                            ? highlightConfig
-                            : undefined;
+                    resultComponent.rsConfig.highlightConfig = resultComponent.resultHighlight
+                        ? highlightConfig
+                        : undefined;
+                    resultComponent.rsConfig.dataField =
+                        resultComponent.fields.title.dataField || 'title';
                 }
                 if (searchComponent) {
-                    searchComponent.rsConfig.highlightConfig =
-                        searchComponent.highlight ? highlightConfig : undefined;
+                    searchComponent.rsConfig.highlightConfig = searchComponent.highlight
+                        ? highlightConfig
+                        : undefined;
+                    searchComponent.rsConfig.dataField =
+                        searchComponent.fields.title.dataField || 'title';
                 }
             },
         );
