@@ -5,7 +5,7 @@ import React, { Component } from 'react';
 import {
     ReactiveBase,
     SelectedFilters,
-    ReactiveComponent,
+    ReactiveComponentPrivate as ReactiveComponent,
     componentTypes,
 } from '@appbaseio/reactivesearch';
 import get from 'lodash.get';
