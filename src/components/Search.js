@@ -7,6 +7,7 @@ import {
     SelectedFilters,
     ReactiveComponentPrivate as ReactiveComponent,
     componentTypes,
+    AIAnswer,
 } from '@appbaseio/reactivesearch';
 import get from 'lodash.get';
 import { string, bool } from 'prop-types';
@@ -306,8 +307,9 @@ class Search extends Component {
                     defaultPreferences.resultSettings.rsConfig.infiniteScroll,
                 )
             ) {
-                const containerCollection =
-                    document.getElementsByClassName('ant-modal');
+                const containerCollection = document.getElementsByClassName(
+                    'ant-modal',
+                );
 
                 if (containerCollection && containerCollection.length > 0) {
                     // eslint-disable-next-line
@@ -433,6 +435,7 @@ class Search extends Component {
                 onChange={(val) => {
                     this.setState({ value: val });
                 }}
+                dataField="original_title"
                 renderItem={(suggestion) => (
                     <Suggestion
                         suggestion={suggestion}
@@ -548,8 +551,7 @@ class Search extends Component {
                 url={this.url}
                 credentials={this.credentials}
                 theme={this.theme}
-                enableAppbase
-                appbaseConfig={{
+                reactivesearchAPIConfig={{
                     recordAnalytics: true,
                     ...userIdObj,
                 }}
@@ -697,6 +699,16 @@ class Search extends Component {
                                 >
                                     <SelectedFilters showClearAll="default" />
                                 </div>
+                            ) : null}
+
+                            {this.resultSettings.showAIAnswer ? (
+                                <AIAnswer
+                                    componentId="AI_ANSWER"
+                                    showIcon
+                                    react={{ and: 'search' }}
+                                    enterButton
+                                    showInput={false}
+                                />
                             ) : null}
 
                             <ResultsLayoutByCategory
