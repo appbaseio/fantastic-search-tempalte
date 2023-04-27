@@ -435,7 +435,6 @@ class Search extends Component {
                 onChange={(val) => {
                     this.setState({ value: val });
                 }}
-                dataField="original_title"
                 renderItem={(suggestion) => (
                     <Suggestion
                         suggestion={suggestion}
