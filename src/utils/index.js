@@ -526,9 +526,8 @@ function transformPreferences(preferences) {
                             resultComponent.fields.userDefinedFields[field]
                                 .dataField
                         ) {
-                            const {
-                                dataField,
-                            } = resultComponent.fields.userDefinedFields[field];
+                            const { dataField } =
+                                resultComponent.fields.userDefinedFields[field];
                             highlightConfig.fields[dataField] = {};
                         }
                     });
@@ -540,9 +539,8 @@ function transformPreferences(preferences) {
                                 resultComponent.fields[field].highlight &&
                                 resultComponent.fields[field].dataField
                             ) {
-                                const { dataField } = resultComponent.fields[
-                                    field
-                                ];
+                                const { dataField } =
+                                    resultComponent.fields[field];
                                 highlightConfig.fields[dataField] = {};
                             }
                         });
@@ -568,18 +566,46 @@ function transformPreferences(preferences) {
                 }
 
                 if (resultComponent) {
-                    resultComponent.rsConfig.highlightConfig = resultComponent.resultHighlight
-                        ? highlightConfig
-                        : undefined;
+                    resultComponent.rsConfig.highlightConfig =
+                        resultComponent.resultHighlight
+                            ? highlightConfig
+                            : undefined;
                     resultComponent.rsConfig.dataField =
                         resultComponent.fields.title.dataField || 'title';
                 }
                 if (searchComponent) {
-                    searchComponent.rsConfig.highlightConfig = searchComponent.highlight
-                        ? highlightConfig
-                        : undefined;
+                    searchComponent.rsConfig.highlightConfig =
+                        searchComponent.highlight ? highlightConfig : undefined;
                     searchComponent.rsConfig.dataField =
                         searchComponent.fields.title.dataField || 'title';
+
+                    if (
+                        searchComponent.rsConfig &&
+                        searchComponent.rsConfig.AIUIConfig
+                    ) {
+                        let { AIUIConfig } = searchComponent.rsConfig;
+                        try {
+                            AIUIConfig = {
+                                ...AIUIConfig,
+                                renderSourceDocument:
+                                    AIUIConfig &&
+                                    AIUIConfig.sourceDocumentLabel &&
+                                    !AIUIConfig.renderSourceDocument
+                                        ? // eslint-disable-next-line no-new-func
+                                          new Function(
+                                              'source',
+                                              `return ${AIUIConfig.sourceDocumentLabel}`,
+                                          )
+                                        : AIUIConfig.renderSourceDocument,
+                            };
+                            delete AIUIConfig.sourceDocumentLabel;
+                        } catch {
+                            console.error(
+                                'Invalid string passed to renderSourceDocument function',
+                            );
+                        }
+                        searchComponent.rsConfig.AIUIConfig = AIUIConfig;
+                    }
                 }
             },
         );

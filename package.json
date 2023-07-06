@@ -4,7 +4,7 @@
     "private": true,
     "dependencies": {
         "@appbaseio/enterprise-search-ui": "latest",
-        "@appbaseio/reactivesearch": "latest",
+        "@appbaseio/reactivesearch": "4.0.0-rc.21",
         "@emotion/core": "^10.0.35",
         "@testing-library/jest-dom": "^5.16.5",
         "@testing-library/react": "^13.4.0",
