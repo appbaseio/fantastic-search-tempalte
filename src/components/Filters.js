@@ -4,7 +4,10 @@ import React from 'react';
 import { css, jsx } from '@emotion/core';
 import get from 'lodash.get';
 import { Collapse } from 'antd';
-import { componentTypes, ReactiveComponent } from '@appbaseio/reactivesearch';
+import {
+    componentTypes,
+    ReactiveComponentPrivate as ReactiveComponent,
+} from '@appbaseio/reactivesearch';
 import createDOMPurify from 'dompurify';
 import { getReactDependenciesFromPreferences, staticFacetsIds } from '../utils';
 import { mediaMax } from '../utils/media';
